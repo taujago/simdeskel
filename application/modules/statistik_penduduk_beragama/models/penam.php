@@ -1,0 +1,47 @@
+<?php  if (!defined('BASEPATH')) exit('No direct script access allowed');
+
+class penam extends CI_Model 
+{
+
+	function __construct()
+	{
+		parent::__construct();
+       // $this->_table = 'country';
+	}
+    
+	
+	 function get_data($param)
+	{		
+		 
+		$this->db->select('*')->from('v_penduduk p');
+		 
+		// $this->db->where("status","1");
+		 
+	  
+	 	$this->db->where('p.id_desa',$param['id_desa']);
+
+	 	$this->db->where("p.id_agama",$param['id_agama']); 
+		
+		$this->db->where("hidup_mati",1)->where("status_kependudukan in ('0','1','2')",null, false );
+
+		($param['limit'] != null ? $this->db->limit($param['limit']['end'], $param['limit']['start']) : '');
+		//$this->db->limit($param['limit']['end'], $param['limit']['start']) ;
+       
+        ($param['sort_by'] != null) ? $this->db->order_by($param['sort_by'], $param['sort_direction']) :'';
+        
+		$res = $this->db->get();
+		//echo $this->db->last_query();
+ 		return $res;
+	}
+	
+	
+ 	function get_stat($jk,$id_agama) {
+		$this->db->where("hidup_mati","1")
+		->where("status_kependudukan in ('0','1','2')",NULL, false);
+		$this->db->where("jk",$jk)->where("id_agama",$id_agama);
+		$res = $this->db->get("v_penduduk");
+		return $res->num_rows();
+	}
+	
+	
+}

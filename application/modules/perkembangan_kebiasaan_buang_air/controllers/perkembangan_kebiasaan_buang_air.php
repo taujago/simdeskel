@@ -1,0 +1,32 @@
+<?php 
+class perkembangan_kebiasaan_buang_air extends op_controller {
+	function __construct(){
+		parent::__construct();
+		$this->load->model("core_model","cm");
+		//$this->load->model("pst","dm");
+	}
+
+
+	function index(){
+		$form['controller'] = get_class($this);
+		$cont = $form['controller'];
+		
+		$form['title1'] = 'Kebiasaan buang air besar';
+		$form['title2'] = '';
+		$form['table'] = 'perkembangan_kebiasaan_buang_air';
+		$form['id'] = 'perkembangan_kebiasaan_buang_air';
+		$form['f1'] = 'hidup_sehat';
+		$form['l1'] = 'Kebiasaan buang air besar';
+		$form['f2'] = 'jumlah';
+		$form['l2'] = 'Jumlah (Keluarga)';
+		//add
+		$form['default'] = $form['f1'];
+		$form['url'] = "grid/get_data";
+		$content = $this->load->view("$cont/grid",$form,true);
+		//$this->set_title($data['header']);
+		$this->set_content($content);
+		$this->render();
+	}
+
+}
+?>
